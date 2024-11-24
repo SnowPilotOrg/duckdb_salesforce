@@ -1,0 +1,23 @@
+# name: test/sql/salesforce.test
+# description: test salesforce extension
+# group: [salesforce]
+
+# Before we load the extension, this will fail
+statement error
+SELECT salesforce('Sam');
+----
+Catalog Error: Scalar Function with name salesforce does not exist!
+
+# Require statement will ensure this test is run with this extension loaded
+require salesforce
+
+# Confirm the extension works
+query I
+SELECT salesforce('Sam');
+----
+Salesforce Sam 🐥
+
+query I
+SELECT salesforce_openssl_version('Michael') ILIKE 'Salesforce Michael, my linked OpenSSL version is OpenSSL%';
+----
+true
